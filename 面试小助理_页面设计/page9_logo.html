@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>面试小助理 - Logo设计展示</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  display: flex; justify-content: center; align-items: center;
+  min-height: 100vh; background: #1a1a2e;
+}
+.phone-frame {
+  width: 375px; height: 812px;
+  background: #fff;
+  position: relative; overflow: hidden;
+  border-radius: 40px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  display: flex; flex-direction: column;
+}
+.status-bar {
+  height: 44px; display: flex; align-items: center;
+  justify-content: space-between; padding: 0 24px;
+  font-size: 12px; color: #1D2129;
+}
+.page-title {
+  font-size: 18px; font-weight: 700; color: #1D2129;
+  padding: 0 20px 16px;
+  font-family: 'PingFang SC', sans-serif;
+}
+.content {
+  flex: 1; padding: 0 20px;
+  overflow-y: auto;
+}
+/* Logo展示区 */
+.logo-showcase {
+  display: flex; flex-direction: column;
+  align-items: center;
+  margin-bottom: 24px;
+}
+.main-logo {
+  width: 160px; height: 160px;
+  background: linear-gradient(135deg, #2B7FFF, #1A5FD4);
+  border-radius: 36px;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 12px 40px rgba(43,127,255,0.3);
+  margin-bottom: 16px;
+}
+.main-logo svg { width: 96px; height: 96px; }
+.logo-name {
+  font-size: 22px; font-weight: 700; color: #1D2129;
+  margin-bottom: 6px;
+  font-family: 'PingFang SC', sans-serif;
+}
+.logo-slogan {
+  font-size: 13px; color: #86909C;
+}
+/* 设计说明 */
+.design-note {
+  background: #F5F7FA;
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 24px;
+}
+.note-title {
+  font-size: 14px; font-weight: 600; color: #1D2129;
+  margin-bottom: 10px;
+  display: flex; align-items: center; gap: 6px;
+}
+.note-text {
+  font-size: 13px; color: #4E5969;
+  line-height: 1.8;
+}
+/* Logo变体 */
+.section-title {
+  font-size: 15px; font-weight: 600; color: #1D2129;
+  margin-bottom: 12px;
+  font-family: 'PingFang SC', sans-serif;
+}
+.logo-variants {
+  display: flex; gap: 16px;
+  margin-bottom: 24px;
+}
+.variant-card {
+  flex: 1;
+  background: #F5F7FA;
+  border-radius: 16px;
+  padding: 20px 16px;
+  text-align: center;
+}
+.variant-logo {
+  width: 64px; height: 64px;
+  border-radius: 16px;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 10px;
+}
+.variant-logo svg { width: 40px; height: 40px; }
+.variant-label {
+  font-size: 12px; color: #86909C;
+}
+/* 色彩展示 */
+.color-section {
+  margin-bottom: 24px;
+}
+.color-row {
+  display: flex; gap: 12px;
+  margin-bottom: 12px;
+}
+.color-chip {
+  flex: 1; text-align: center;
+}
+.color-circle {
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  margin: 0 auto 6px;
+}
+.color-name { font-size: 11px; color: #1D2129; font-weight: 600; }
+.color-value { font-size: 10px; color: #86909C; }
+/* 尺寸展示 */
+.size-section {
+  margin-bottom: 24px;
+}
+.size-row {
+  display: flex; align-items: flex-end;
+  gap: 20px; justify-content: center;
+  padding: 20px 0;
+}
+.size-logo {
+  display: flex; flex-direction: column;
+  align-items: center; gap: 8px;
+}
+.size-icon {
+  background: linear-gradient(135deg, #2B7FFF, #1A5FD4);
+  border-radius: 24%;
+  display: flex; align-items: center; justify-content: center;
+}
+.size-icon svg { fill: #fff; }
+.size-label { font-size: 10px; color: #86909C; }
+</style>
+</head>
+<body>
+<div class="phone-frame">
+  <div class="status-bar">
+    <span>9:41</span>
+    <span style="display:flex;gap:4px;align-items:center;">
+      <svg width="16" height="12" viewBox="0 0 16 12"><rect x="0" y="5" width="3" height="7" rx="1" fill="#1D2129"/><rect x="4.5" y="3" width="3" height="9" rx="1" fill="#1D2129"/><rect x="9" y="1" width="3" height="11" rx="1" fill="#1D2129"/><rect x="13.5" y="0" width="2.5" height="12" rx="1" fill="#1D2129"/></svg>
+      <svg width="22" height="12" viewBox="0 0 22 12"><rect x="0" y="1" width="18" height="10" rx="2" stroke="#1D2129" stroke-width="1" fill="none"/><rect x="19" y="3.5" width="2" height="5" rx="1" fill="#1D2129"/><rect x="2" y="3" width="12" height="6" rx="1" fill="#34C759"/></svg>
+    </span>
+  </div>
+  <div class="page-title">Logo 设计方案</div>
+  <div class="content">
+    <!-- 主Logo -->
+    <div class="logo-showcase">
+      <div class="main-logo">
+        <svg viewBox="0 0 96 96" fill="none">
+          <!-- 大对话气泡 -->
+          <path d="M18 12h40a10 10 0 0110 10v22a10 10 0 01-10 10H34l-12 12v-12h-4a10 10 0 01-10-10V22a10 10 0 0110-10z" fill="#fff"/>
+          <!-- 小对话气泡 -->
+          <path d="M38 38h28a8 8 0 018 8v16a8 8 0 01-8 8h-3v8l-8-8h-17a8 8 0 01-8-8V46a8 8 0 018-8z" fill="#FF8C42"/>
+          <!-- 握手图形 -->
+          <path d="M30 32c0 0 5 5 12 5s8-4 10-4 4 3 4 3" stroke="#2B7FFF" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+          <!-- 白点 -->
+          <circle cx="28" cy="30" r="3" fill="#2B7FFF"/>
+          <circle cx="40" cy="30" r="3" fill="#2B7FFF"/>
+          <circle cx="52" cy="30" r="3" fill="#2B7FFF"/>
+        </svg>
+      </div>
+      <div class="logo-name">面试小助理</div>
+      <div class="logo-slogan">面试准备，从未如此轻松</div>
+    </div>
+    <!-- 设计说明 -->
+    <div class="design-note">
+      <div class="note-title">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2B7FFF" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+        设计理念
+      </div>
+      <div class="note-text">
+        Logo以<strong>对话气泡</strong>为核心图形元素，大小两个气泡象征面试官与求职者之间的双向沟通。气泡内的白色圆点代表交流中的信息传递，<strong>握手图形</strong>寓意"合作共赢"，精准传达APP助力毕业生与用人单位实现有效沟通的品牌理念。
+      </div>
+    </div>
+    <!-- Logo变体 -->
+    <div class="section-title">Logo 变体</div>
+    <div class="logo-variants">
+      <div class="variant-card">
+        <div class="variant-logo" style="background:linear-gradient(135deg,#2B7FFF,#1A5FD4)">
+          <svg viewBox="0 0 96 96" fill="none" width="40" height="40">
+            <path d="M18 12h40a10 10 0 0110 10v22a10 10 0 01-10 10H34l-12 12v-12h-4a10 10 0 01-10-10V22a10 10 0 0110-10z" fill="#fff"/>
+            <path d="M38 38h28a8 8 0 018 8v16a8 8 0 01-8 8h-3v8l-8-8h-17a8 8 0 01-8-8V46a8 8 0 018-8z" fill="#FF8C42"/>
+            <circle cx="28" cy="30" r="3" fill="#2B7FFF"/>
+            <circle cx="40" cy="30" r="3" fill="#2B7FFF"/>
+            <circle cx="52" cy="30" r="3" fill="#2B7FFF"/>
+          </svg>
+        </div>
+        <div class="variant-label">彩色版</div>
+      </div>
+      <div class="variant-card">
+        <div class="variant-logo" style="background:#1D2129">
+          <svg viewBox="0 0 96 96" fill="none" width="40" height="40">
+            <path d="M18 12h40a10 10 0 0110 10v22a10 10 0 01-10 10H34l-12 12v-12h-4a10 10 0 01-10-10V22a10 10 0 0110-10z" fill="#fff"/>
+            <path d="M38 38h28a8 8 0 018 8v16a8 8 0 01-8 8h-3v8l-8-8h-17a8 8 0 01-8-8V46a8 8 0 018-8z" fill="#86909C"/>
+            <circle cx="28" cy="30" r="3" fill="#fff"/>
+            <circle cx="40" cy="30" r="3" fill="#fff"/>
+            <circle cx="52" cy="30" r="3" fill="#fff"/>
+          </svg>
+        </div>
+        <div class="variant-label">单色版</div>
+      </div>
+      <div class="variant-card">
+        <div class="variant-logo" style="background:#fff;border:1px solid #E5E6EB">
+          <svg viewBox="0 0 96 96" fill="none" width="40" height="40">
+            <path d="M18 12h40a10 10 0 0110 10v22a10 10 0 01-10 10H34l-12 12v-12h-4a10 10 0 01-10-10V22a10 10 0 0110-10z" fill="#2B7FFF"/>
+            <path d="M38 38h28a8 8 0 018 8v16a8 8 0 01-8 8h-3v8l-8-8h-17a8 8 0 01-8-8V46a8 8 0 018-8z" fill="#FF8C42"/>
+            <circle cx="28" cy="30" r="3" fill="#fff"/>
+            <circle cx="40" cy="30" r="3" fill="#fff"/>
+            <circle cx="52" cy="30" r="3" fill="#fff"/>
+          </svg>
+        </div>
+        <div class="variant-label">白底版</div>
+      </div>
+    </div>
+    <!-- 品牌色彩 -->
+    <div class="section-title">品牌色彩</div>
+    <div class="color-section">
+      <div class="color-row">
+        <div class="color-chip">
+          <div class="color-circle" style="background:#2B7FFF"></div>
+          <div class="color-name">主色</div>
+          <div class="color-value">#2B7FFF</div>
+        </div>
+        <div class="color-chip">
+          <div class="color-circle" style="background:#FF8C42"></div>
+          <div class="color-name">辅助色</div>
+          <div class="color-value">#FF8C42</div>
+        </div>
+        <div class="color-chip">
+          <div class="color-circle" style="background:#34C759"></div>
+          <div class="color-name">成功色</div>
+          <div class="color-value">#34C759</div>
+        </div>
+        <div class="color-chip">
+          <div class="color-circle" style="background:#1D2129"></div>
+          <div class="color-name">文字色</div>
+          <div class="color-value">#1D2129</div>
+        </div>
+      </div>
+    </div>
+    <!-- 尺寸适配 -->
+    <div class="section-title">尺寸适配</div>
+    <div class="size-section">
+      <div class="size-row">
+        <div class="size-logo">
+          <div class="size-icon" style="width:24px;height:24px;border-radius:6px">
+            <svg viewBox="0 0 96 96" width="14" height="14"><path d="M18 12h40a10 10 0 0110 10v22a10 10 0 01-10 10H34l-12 12v-12h-4a10 10 0 01-10-10V22a10 10 0 0110-10z" fill="#fff"/></svg>
+          </div>
+          <span class="size-label">24×24</span>
+        </div>
+        <div class="size-logo">
+          <div class="size-icon" style="width:36px;height:36px;border-radius:8px">
+            <svg viewBox="0 0 96 96" width="22" height="22"><path d="M18 12h40a10 10 0 0110 10v22a10 10 0 01-10 10H34l-12 12v-12h-4a10 10 0 01-10-10V22a10 10 0 0110-10z" fill="#fff"/><path d="M38 38h28a8 8 0 018 8v16a8 8 0 01-8 8h-3v8l-8-8h-17a8 8 0 01-8-8V46a8 8 0 018-8z" fill="#FF8C42"/></svg>
+          </div>
+          <span class="size-label">36×36</span>
+        </div>
+        <div class="size-logo">
+          <div class="size-icon" style="width:48px;height:48px;border-radius:11px">
+            <svg viewBox="0 0 96 96" width="30" height="30"><path d="M18 12h40a10 10 0 0110 10v22a10 10 0 01-10 10H34l-12 12v-12h-4a10 10 0 01-10-10V22a10 10 0 0110-10z" fill="#fff"/><path d="M38 38h28a8 8 0 018 8v16a8 8 0 01-8 8h-3v8l-8-8h-17a8 8 0 01-8-8V46a8 8 0 018-8z" fill="#FF8C42"/><circle cx="28" cy="30" r="3" fill="#2B7FFF"/><circle cx="40" cy="30" r="3" fill="#2B7FFF"/></svg>
+          </div>
+          <span class="size-label">48×48</span>
+        </div>
+        <div class="size-logo">
+          <div class="size-icon" style="width:64px;height:64px;border-radius:14px">
+            <svg viewBox="0 0 96 96" width="40" height="40"><path d="M18 12h40a10 10 0 0110 10v22a10 10 0 01-10 10H34l-12 12v-12h-4a10 10 0 01-10-10V22a10 10 0 0110-10z" fill="#fff"/><path d="M38 38h28a8 8 0 018 8v16a8 8 0 01-8 8h-3v8l-8-8h-17a8 8 0 01-8-8V46a8 8 0 018-8z" fill="#FF8C42"/><circle cx="28" cy="30" r="3" fill="#2B7FFF"/><circle cx="40" cy="30" r="3" fill="#2B7FFF"/><circle cx="52" cy="30" r="3" fill="#2B7FFF"/></svg>
+          </div>
+          <span class="size-label">64×64</span>
+        </div>
+        <div class="size-logo">
+          <div class="size-icon" style="width:96px;height:96px;border-radius:22px">
+            <svg viewBox="0 0 96 96" width="60" height="60"><path d="M18 12h40a10 10 0 0110 10v22a10 10 0 01-10 10H34l-12 12v-12h-4a10 10 0 01-10-10V22a10 10 0 0110-10z" fill="#fff"/><path d="M38 38h28a8 8 0 018 8v16a8 8 0 01-8 8h-3v8l-8-8h-17a8 8 0 01-8-8V46a8 8 0 018-8z" fill="#FF8C42"/><circle cx="28" cy="30" r="3" fill="#2B7FFF"/><circle cx="40" cy="30" r="3" fill="#2B7FFF"/><circle cx="52" cy="30" r="3" fill="#2B7FFF"/><path d="M30 32c0 0 5 5 12 5s8-4 10-4 4 3 4 3" stroke="#2B7FFF" stroke-width="2" stroke-linecap="round" fill="none"/></svg>
+          </div>
+          <span class="size-label">96×96</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

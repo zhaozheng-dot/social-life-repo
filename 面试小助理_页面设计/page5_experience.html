@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>面试小助理 - 经验广场页</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  display: flex; justify-content: center; align-items: center;
+  min-height: 100vh; background: #1a1a2e;
+}
+.phone-frame {
+  width: 375px; height: 812px;
+  background: #F5F7FA;
+  position: relative; overflow: hidden;
+  border-radius: 40px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  display: flex; flex-direction: column;
+}
+.status-bar {
+  height: 44px; display: flex; align-items: center;
+  justify-content: space-between; padding: 0 24px;
+  font-size: 12px; color: #1D2129;
+}
+.nav-bar {
+  padding: 0 20px 14px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-title {
+  font-family: 'PingFang SC', sans-serif;
+  font-size: 20px; font-weight: 700; color: #1D2129;
+}
+.nav-right {
+  display: flex; gap: 16px; align-items: center;
+}
+/* 分类标签 */
+.tabs {
+  display: flex; gap: 0;
+  padding: 0 20px;
+  margin-bottom: 12px;
+  overflow-x: auto;
+}
+.tab {
+  padding: 8px 16px;
+  font-size: 13px; color: #86909C;
+  white-space: nowrap; cursor: pointer;
+  border-bottom: 2px solid transparent;
+  font-family: 'PingFang SC', sans-serif;
+  transition: all 0.3s;
+}
+.tab.active {
+  color: #2B7FFF; font-weight: 600;
+  border-bottom-color: #2B7FFF;
+  background: #EBF2FF;
+  border-radius: 20px 20px 0 0;
+}
+/* 帖子列表 */
+.content {
+  flex: 1; padding: 0 20px;
+  overflow-y: auto;
+}
+.post-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+.post-header {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 10px;
+}
+.avatar {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-size: 14px; font-weight: 600;
+}
+.post-user-info { flex: 1; }
+.post-name { font-size: 13px; font-weight: 600; color: #1D2129; }
+.post-time { font-size: 11px; color: #C9CDD4; }
+.post-follow {
+  font-size: 12px; color: #2B7FFF;
+  border: 1px solid #2B7FFF;
+  padding: 3px 10px; border-radius: 14px;
+  cursor: pointer;
+}
+.post-title {
+  font-size: 15px; font-weight: 600; color: #1D2129;
+  margin-bottom: 6px; line-height: 1.5;
+}
+.post-summary {
+  font-size: 13px; color: #4E5969; line-height: 1.7;
+  margin-bottom: 10px;
+  display: -webkit-box; -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical; overflow: hidden;
+}
+.post-tags {
+  display: flex; gap: 6px; flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+.tag {
+  font-size: 11px; padding: 2px 8px;
+  border-radius: 4px; background: #F2F3F5; color: #86909C;
+}
+.tag.blue { background: #EBF2FF; color: #2B7FFF; }
+.post-footer {
+  display: flex; align-items: center; gap: 20px;
+}
+.post-action {
+  display: flex; align-items: center; gap: 4px;
+  font-size: 12px; color: #86909C;
+}
+.post-action svg { width: 16px; height: 16px; }
+/* 底部导航 */
+.bottom-nav {
+  height: 70px; background: #fff;
+  display: flex; align-items: center;
+  justify-content: space-around;
+  border-top: 1px solid #F2F3F5;
+  padding-bottom: 10px;
+}
+.nav-item {
+  display: flex; flex-direction: column;
+  align-items: center; gap: 4px;
+}
+.nav-item svg { width: 24px; height: 24px; }
+.nav-item span { font-size: 10px; }
+.nav-item.active svg { color: #2B7FFF; }
+.nav-item.active span { color: #2B7FFF; font-weight: 600; }
+.nav-item:not(.active) svg { color: #C9CDD4; }
+.nav-item:not(.active) span { color: #C9CDD4; }
+</style>
+</head>
+<body>
+<div class="phone-frame">
+  <div class="status-bar">
+    <span>9:41</span>
+    <span style="display:flex;gap:4px;align-items:center;">
+      <svg width="16" height="12" viewBox="0 0 16 12"><rect x="0" y="5" width="3" height="7" rx="1" fill="#1D2129"/><rect x="4.5" y="3" width="3" height="9" rx="1" fill="#1D2129"/><rect x="9" y="1" width="3" height="11" rx="1" fill="#1D2129"/><rect x="13.5" y="0" width="2.5" height="12" rx="1" fill="#1D2129"/></svg>
+      <svg width="22" height="12" viewBox="0 0 22 12"><rect x="0" y="1" width="18" height="10" rx="2" stroke="#1D2129" stroke-width="1" fill="none"/><rect x="19" y="3.5" width="2" height="5" rx="1" fill="#1D2129"/><rect x="2" y="3" width="12" height="6" rx="1" fill="#34C759"/></svg>
+    </span>
+  </div>
+  <div class="nav-bar">
+    <span class="nav-title">经验广场</span>
+    <div class="nav-right">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1D2129" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1D2129" stroke-width="1.8"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+    </div>
+  </div>
+  <!-- 分类标签 -->
+  <div class="tabs">
+    <div class="tab active">推荐</div>
+    <div class="tab">互联网</div>
+    <div class="tab">金融</div>
+    <div class="tab">教育</div>
+    <div class="tab">国企</div>
+    <div class="tab">外企</div>
+  </div>
+  <!-- 帖子列表 -->
+  <div class="content">
+    <!-- 帖子1 -->
+    <div class="post-card">
+      <div class="post-header">
+        <div class="avatar" style="background:linear-gradient(135deg,#2B7FFF,#1A5FD4)">李</div>
+        <div class="post-user-info">
+          <div class="post-name">李同学</div>
+          <div class="post-time">2小时前 · 北京邮电大学</div>
+        </div>
+        <span class="post-follow">+ 关注</span>
+      </div>
+      <div class="post-title">字节跳动产品经理二面面经分享</div>
+      <div class="post-summary">刚结束字节的二面，整体感觉面试官非常专业，主要围绕项目经验和产品思维进行提问。分享几个高频问题：1. 你如何看待抖音和快手的差异化竞争？2. 如果让你设计一个求职面试工具...</div>
+      <div class="post-tags">
+        <span class="tag blue">字节跳动</span>
+        <span class="tag blue">产品经理</span>
+        <span class="tag">面试经验</span>
+      </div>
+      <div class="post-footer">
+        <span class="post-action">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+          128
+        </span>
+        <span class="post-action">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          36
+        </span>
+        <span class="post-action">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>
+          收藏
+        </span>
+      </div>
+    </div>
+    <!-- 帖子2 -->
+    <div class="post-card">
+      <div class="post-header">
+        <div class="avatar" style="background:linear-gradient(135deg,#07C160,#06AD56)">王</div>
+        <div class="post-user-info">
+          <div class="post-name">王学姐</div>
+          <div class="post-time">5小时前 · 清华大学</div>
+        </div>
+        <span class="post-follow">+ 关注</span>
+      </div>
+      <div class="post-title">腾讯前端一面高频题整理（含答案）</div>
+      <div class="post-summary">整理了腾讯前端一面常考的知识点，涵盖JavaScript基础、React/Vue框架、计算机网络、算法等方面，每道题都附上了详细的参考答案...</div>
+      <div class="post-tags">
+        <span class="tag blue">腾讯</span>
+        <span class="tag blue">前端开发</span>
+        <span class="tag">面试题</span>
+      </div>
+      <div class="post-footer">
+        <span class="post-action">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+          256
+        </span>
+        <span class="post-action">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          72
+        </span>
+        <span class="post-action">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>
+          收藏
+        </span>
+      </div>
+    </div>
+    <!-- 帖子3 -->
+    <div class="post-card">
+      <div class="post-header">
+        <div class="avatar" style="background:linear-gradient(135deg,#FF8C42,#FF6B2B)">张</div>
+        <div class="post-user-info">
+          <div class="post-name">张同学</div>
+          <div class="post-time">1天前 · 北京大学</div>
+        </div>
+        <span class="post-follow">+ 关注</span>
+      </div>
+      <div class="post-title">金融行业面试经验：工行、建行、招行对比</div>
+      <div class="post-summary">秋招季同时拿到了工行、建行、招行的offer，分享一下三家银行的面试流程、常见问题以及薪资待遇对比，希望对大家有所帮助...</div>
+      <div class="post-tags">
+        <span class="tag blue">金融</span>
+        <span class="tag">银行面试</span>
+        <span class="tag">Offer对比</span>
+      </div>
+      <div class="post-footer">
+        <span class="post-action">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+          89
+        </span>
+        <span class="post-action">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          24
+        </span>
+        <span class="post-action">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>
+          收藏
+        </span>
+      </div>
+    </div>
+  </div>
+  <!-- 底部导航 -->
+  <div class="bottom-nav">
+    <div class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      <span>首页</span>
+    </div>
+    <div class="nav-item active">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+      <span>经验</span>
+    </div>
+    <div class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+      <span>模拟</span>
+    </div>
+    <div class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span>我的</span>
+    </div>
+  </div>
+</div>
+</body>
+</html>

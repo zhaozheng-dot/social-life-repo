@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>面试小助理 - 登录注册页</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  display: flex; justify-content: center; align-items: center;
+  min-height: 100vh; background: #1a1a2e;
+}
+.phone-frame {
+  width: 375px; height: 812px;
+  background: #F5F7FA;
+  position: relative; overflow: hidden;
+  border-radius: 40px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  display: flex; flex-direction: column;
+}
+/* 状态栏 */
+.status-bar {
+  height: 44px; display: flex; align-items: center;
+  justify-content: space-between; padding: 0 24px;
+  font-size: 12px; color: #1D2129;
+}
+.top-section {
+  padding: 60px 32px 40px;
+  text-align: center;
+}
+.top-logo {
+  width: 72px; height: 72px;
+  background: linear-gradient(135deg, #2B7FFF, #1A5FD4);
+  border-radius: 20px;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 20px;
+}
+.top-logo svg { width: 42px; height: 42px; }
+.top-title {
+  font-family: 'PingFang SC', sans-serif;
+  font-size: 22px; font-weight: 700; color: #1D2129;
+  margin-bottom: 6px;
+}
+.top-subtitle {
+  font-size: 13px; color: #86909C;
+}
+/* 表单 */
+.form-section {
+  padding: 0 32px;
+}
+.input-group {
+  margin-bottom: 20px;
+}
+.input-label {
+  font-size: 13px; color: #86909C;
+  margin-bottom: 8px; display: block;
+}
+.input-field {
+  width: 100%; height: 48px;
+  border: none; border-bottom: 1.5px solid #E5E6EB;
+  background: transparent;
+  font-size: 16px; color: #1D2129;
+  outline: none; padding: 0 4px;
+  font-family: 'PingFang SC', sans-serif;
+  transition: border-color 0.3s;
+}
+.input-field::placeholder { color: #C9CDD4; }
+.input-field:focus { border-bottom-color: #2B7FFF; }
+.phone-row {
+  display: flex; align-items: center;
+  border-bottom: 1.5px solid #E5E6EB;
+  height: 48px; transition: border-color 0.3s;
+}
+.phone-row:focus-within { border-bottom-color: #2B7FFF; }
+.phone-prefix {
+  font-size: 15px; color: #1D2129;
+  padding-right: 12px;
+  border-right: 1px solid #E5E6EB;
+  margin-right: 12px;
+  white-space: nowrap;
+}
+.phone-row input {
+  flex: 1; border: none; background: transparent;
+  font-size: 16px; color: #1D2129;
+  outline: none; font-family: 'PingFang SC', sans-serif;
+}
+.phone-row input::placeholder { color: #C9CDD4; }
+.code-row {
+  display: flex; align-items: center;
+  border-bottom: 1.5px solid #E5E6EB;
+  height: 48px; transition: border-color 0.3s;
+}
+.code-row:focus-within { border-bottom-color: #2B7FFF; }
+.code-row input {
+  flex: 1; border: none; background: transparent;
+  font-size: 16px; color: #1D2129;
+  outline: none; font-family: 'PingFang SC', sans-serif;
+}
+.code-row input::placeholder { color: #C9CDD4; }
+.get-code {
+  font-size: 13px; color: #2B7FFF;
+  white-space: nowrap; cursor: pointer;
+  padding-left: 12px;
+  border-left: 1px solid #E5E6EB;
+}
+.btn-primary {
+  width: 100%; height: 48px;
+  background: linear-gradient(135deg, #2B7FFF, #1A5FD4);
+  color: #FFFFFF; border: none; border-radius: 24px;
+  font-size: 16px; font-weight: 600;
+  cursor: pointer; margin-top: 32px;
+  font-family: 'PingFang SC', sans-serif;
+  box-shadow: 0 4px 16px rgba(43,127,255,0.3);
+  letter-spacing: 2px;
+}
+.divider {
+  display: flex; align-items: center;
+  margin: 36px 0 28px; padding: 0 32px;
+}
+.divider-line {
+  flex: 1; height: 1px; background: #E5E6EB;
+}
+.divider-text {
+  font-size: 12px; color: #C9CDD4;
+  padding: 0 16px; white-space: nowrap;
+}
+.social-login {
+  display: flex; justify-content: center; gap: 40px;
+  padding: 0 32px;
+}
+.social-btn {
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+}
+.social-btn.wechat { background: #07C160; }
+.social-btn.qq { background: #12B7F5; }
+.social-btn svg { width: 24px; height: 24px; }
+.agreement {
+  position: absolute; bottom: 60px;
+  width: 100%; text-align: center;
+  padding: 0 48px;
+  font-size: 11px; color: #C9CDD4;
+  line-height: 1.6;
+}
+.agreement a { color: #2B7FFF; text-decoration: none; }
+</style>
+</head>
+<body>
+<div class="phone-frame">
+  <div class="status-bar">
+    <span>9:41</span>
+    <span style="display:flex;gap:4px;align-items:center;">
+      <svg width="16" height="12" viewBox="0 0 16 12"><rect x="0" y="5" width="3" height="7" rx="1" fill="#1D2129"/><rect x="4.5" y="3" width="3" height="9" rx="1" fill="#1D2129"/><rect x="9" y="1" width="3" height="11" rx="1" fill="#1D2129"/><rect x="13.5" y="0" width="2.5" height="12" rx="1" fill="#1D2129"/></svg>
+      <svg width="22" height="12" viewBox="0 0 22 12"><rect x="0" y="1" width="18" height="10" rx="2" stroke="#1D2129" stroke-width="1" fill="none"/><rect x="19" y="3.5" width="2" height="5" rx="1" fill="#1D2129"/><rect x="2" y="3" width="12" height="6" rx="1" fill="#34C759"/></svg>
+    </span>
+  </div>
+  <div class="top-section">
+    <div class="top-logo">
+      <svg viewBox="0 0 42 42" fill="none">
+        <path d="M8 6h18a5 5 0 015 5v10a5 5 0 01-5 5H16l-5 5v-5H8a5 5 0 01-5-5V11a5 5 0 015-5z" fill="#fff"/>
+        <path d="M18 18h12a4 4 0 014 4v8a4 4 0 01-4 4h-1v4l-4-4h-7a4 4 0 01-4-4v-8a4 4 0 014-4z" fill="#FF8C42"/>
+        <circle cx="12" cy="15" r="1.5" fill="#2B7FFF"/>
+        <circle cx="18" cy="15" r="1.5" fill="#2B7FFF"/>
+        <circle cx="24" cy="15" r="1.5" fill="#2B7FFF"/>
+      </svg>
+    </div>
+    <div class="top-title">面试小助理</div>
+    <div class="top-subtitle">开始你的面试准备之旅</div>
+  </div>
+  <div class="form-section">
+    <div class="input-group">
+      <label class="input-label">手机号</label>
+      <div class="phone-row">
+        <span class="phone-prefix">+86</span>
+        <input type="tel" placeholder="请输入手机号" maxlength="11">
+      </div>
+    </div>
+    <div class="input-group">
+      <label class="input-label">验证码</label>
+      <div class="code-row">
+        <input type="text" placeholder="请输入验证码" maxlength="6">
+        <span class="get-code">获取验证码</span>
+      </div>
+    </div>
+    <button class="btn-primary">登 录</button>
+  </div>
+  <div class="divider">
+    <div class="divider-line"></div>
+    <span class="divider-text">其他登录方式</span>
+    <div class="divider-line"></div>
+  </div>
+  <div class="social-login">
+    <div class="social-btn wechat">
+      <svg viewBox="0 0 24 24" fill="#fff"><path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 01.213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.295.295a.326.326 0 00.167-.054l1.903-1.114a.864.864 0 01.717-.098 10.16 10.16 0 002.837.403c.276 0 .543-.027.811-.05a6.42 6.42 0 01-.246-1.784c0-3.652 3.473-6.614 7.755-6.614.244 0 .48.019.72.038C16.795 4.476 13.109 2.188 8.691 2.188zm-2.85 4.56a1.1 1.1 0 110 2.2 1.1 1.1 0 010-2.2zm5.7 0a1.1 1.1 0 110 2.2 1.1 1.1 0 010-2.2zm4.3 4.378c-3.652 0-6.614 2.58-6.614 5.756s2.962 5.755 6.614 5.755c.722 0 1.418-.107 2.073-.309a.648.648 0 01.54.073l1.43.838a.246.246 0 00.126.041.222.222 0 00.222-.222c0-.054-.022-.108-.036-.16l-.293-1.112a.444.444 0 01.16-.5c1.464-1.078 2.398-2.69 2.398-4.404-.1-3.276-3.062-5.856-6.62-5.856zM14.2 13.4a.9.9 0 110 1.8.9.9 0 010-1.8zm4.5 0a.9.9 0 110 1.8.9.9 0 010-1.8z"/></svg>
+    </div>
+    <div class="social-btn qq">
+      <svg viewBox="0 0 24 24" fill="#fff"><path d="M12 2C7.589 2 4 5.589 4 9.996c0 1.928.691 3.691 1.835 5.07-.18.632-.485 1.513-.86 2.282-.525 1.078-1.168 1.847-.57 2.035.31.098.94-.198 1.502-.605a8.354 8.354 0 002.05-2.19A7.955 7.955 0 0012 17.992c3.86 0 7.044-2.855 7.824-6.533C20.61 7.183 16.86 2 12 2z"/></svg>
+    </div>
+  </div>
+  <div class="agreement">
+    登录即表示同意 <a href="#">用户协议</a> 和 <a href="#">隐私政策</a>
+  </div>
+</div>
+</body>
+</html>

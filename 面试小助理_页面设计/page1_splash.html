@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>面试小助理 - 开屏页</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  display: flex; justify-content: center; align-items: center;
+  min-height: 100vh; background: #1a1a2e;
+}
+.phone-frame {
+  width: 375px; height: 812px;
+  background: linear-gradient(160deg, #2B7FFF 0%, #1A5FD4 50%, #0F4AB8 100%);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+  border-radius: 40px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+/* 装饰圆 */
+.phone-frame::before {
+  content: '';
+  position: absolute; top: -120px; right: -120px;
+  width: 300px; height: 300px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+}
+.phone-frame::after {
+  content: '';
+  position: absolute; bottom: -80px; left: -80px;
+  width: 200px; height: 200px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.04);
+}
+.logo-container {
+  display: flex; flex-direction: column;
+  align-items: center; z-index: 1;
+  animation: fadeInUp 1.2s ease-out;
+}
+.logo-icon {
+  width: 120px; height: 120px;
+  background: #FFFFFF;
+  border-radius: 32px;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+  margin-bottom: 28px;
+}
+/* 对话气泡SVG */
+.logo-icon svg {
+  width: 68px; height: 68px;
+}
+.app-name {
+  font-family: 'PingFang SC', 'Noto Sans SC', sans-serif;
+  font-size: 32px; font-weight: 700;
+  color: #FFFFFF;
+  letter-spacing: 4px;
+  margin-bottom: 12px;
+}
+.slogan {
+  font-family: 'PingFang SC', 'Noto Sans SC', sans-serif;
+  font-size: 15px; color: rgba(255,255,255,0.75);
+  letter-spacing: 2px;
+  margin-bottom: 80px;
+}
+.loading-bar {
+  width: 160px; height: 3px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 2px;
+  overflow: hidden;
+  position: absolute; bottom: 80px;
+}
+.loading-bar-inner {
+  width: 0%; height: 100%;
+  background: #FFFFFF;
+  border-radius: 2px;
+  animation: loadBar 2.5s ease-in-out forwards;
+}
+.version {
+  position: absolute; bottom: 50px;
+  font-family: 'PingFang SC', sans-serif;
+  font-size: 12px; color: rgba(255,255,255,0.4);
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes loadBar {
+  0% { width: 0%; }
+  100% { width: 100%; }
+}
+</style>
+</head>
+<body>
+<div class="phone-frame">
+  <div class="logo-container">
+    <div class="logo-icon">
+      <svg viewBox="0 0 68 68" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- 大对话气泡 -->
+        <path d="M14 10h28a8 8 0 018 8v16a8 8 0 01-8 8H26l-8 8v-8h-4a8 8 0 01-8-8V18a8 8 0 018-8z" fill="#2B7FFF"/>
+        <!-- 小对话气泡 -->
+        <path d="M30 30h18a6 6 0 016 6v12a6 6 0 01-6 6h-2v6l-6-6h-10a6 6 0 01-6-6V36a6 6 0 016-6z" fill="#FF8C42"/>
+        <!-- 握手图形 -->
+        <path d="M24 24c0 0 3 4 8 4s6-3 8-3 3 2 3 2" stroke="#fff" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+        <!-- 气泡内白点 -->
+        <circle cx="22" cy="22" r="2" fill="#fff"/>
+        <circle cx="30" cy="22" r="2" fill="#fff"/>
+        <circle cx="38" cy="22" r="2" fill="#fff"/>
+      </svg>
+    </div>
+    <div class="app-name">面试小助理</div>
+    <div class="slogan">面试准备，从未如此轻松</div>
+  </div>
+  <div class="loading-bar">
+    <div class="loading-bar-inner"></div>
+  </div>
+  <div class="version">v1.0.0</div>
+</div>
+</body>
+</html>

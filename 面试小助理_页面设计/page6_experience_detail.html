@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>面试小助理 - 经验详情页</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  display: flex; justify-content: center; align-items: center;
+  min-height: 100vh; background: #1a1a2e;
+}
+.phone-frame {
+  width: 375px; height: 812px;
+  background: #F5F7FA;
+  position: relative; overflow: hidden;
+  border-radius: 40px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  display: flex; flex-direction: column;
+}
+.status-bar {
+  height: 44px; display: flex; align-items: center;
+  justify-content: space-between; padding: 0 24px;
+  font-size: 12px; color: #1D2129;
+}
+.top-bar {
+  padding: 0 16px 12px;
+  display: flex; align-items: center; justify-content: space-between;
+  border-bottom: 1px solid #F2F3F5;
+}
+.back-btn {
+  width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+}
+.top-actions {
+  display: flex; gap: 16px;
+}
+.content {
+  flex: 1; overflow-y: auto;
+  background: #fff;
+}
+/* 作者信息 */
+.author-section {
+  padding: 16px 20px;
+  display: flex; align-items: center; gap: 12px;
+  border-bottom: 1px solid #F2F3F5;
+}
+.author-avatar {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #2B7FFF, #1A5FD4);
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-size: 16px; font-weight: 600;
+}
+.author-info { flex: 1; }
+.author-name { font-size: 14px; font-weight: 600; color: #1D2129; }
+.author-meta { font-size: 12px; color: #86909C; }
+.follow-btn {
+  font-size: 13px; color: #fff;
+  background: linear-gradient(135deg, #2B7FFF, #1A5FD4);
+  padding: 6px 16px; border-radius: 16px;
+  border: none; cursor: pointer;
+  font-family: 'PingFang SC', sans-serif;
+}
+/* 文章内容 */
+.article {
+  padding: 20px;
+}
+.article-title {
+  font-size: 18px; font-weight: 700; color: #1D2129;
+  line-height: 1.5; margin-bottom: 16px;
+  font-family: 'PingFang SC', sans-serif;
+}
+.article-body {
+  font-size: 14px; color: #4E5969; line-height: 2;
+}
+.article-body p { margin-bottom: 14px; }
+.article-body .highlight {
+  background: #EBF2FF;
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: #2B7FFF; font-weight: 500;
+}
+.article-body .question {
+  background: #FFF7E6;
+  border-left: 3px solid #FF8C42;
+  padding: 12px 14px;
+  border-radius: 0 8px 8px 0;
+  margin: 12px 0;
+  font-weight: 500;
+  color: #1D2129;
+}
+/* 标签 */
+.article-tags {
+  padding: 16px 20px;
+  display: flex; gap: 8px; flex-wrap: wrap;
+  border-top: 1px solid #F2F3F5;
+}
+.a-tag {
+  font-size: 12px; padding: 4px 12px;
+  border-radius: 16px; background: #F2F3F5; color: #86909C;
+}
+.a-tag.blue { background: #EBF2FF; color: #2B7FFF; }
+/* 互动栏 */
+.interact-bar {
+  padding: 12px 20px;
+  display: flex; align-items: center; justify-content: space-around;
+  border-top: 1px solid #F2F3F5;
+  background: #fff;
+}
+.interact-btn {
+  display: flex; flex-direction: column;
+  align-items: center; gap: 4px;
+  cursor: pointer;
+}
+.interact-btn svg { width: 22px; height: 22px; }
+.interact-btn span { font-size: 11px; color: #86909C; }
+.interact-btn.liked svg { color: #FF4D4F; }
+.interact-btn.liked span { color: #FF4D4F; }
+/* 评论输入 */
+.comment-input {
+  padding: 12px 20px 30px;
+  background: #fff;
+  border-top: 1px solid #F2F3F5;
+  display: flex; align-items: center; gap: 12px;
+}
+.comment-field {
+  flex: 1; height: 40px;
+  background: #F5F7FA;
+  border-radius: 20px;
+  border: none; padding: 0 16px;
+  font-size: 14px; color: #1D2129;
+  outline: none;
+  font-family: 'PingFang SC', sans-serif;
+}
+.comment-field::placeholder { color: #C9CDD4; }
+.send-btn {
+  width: 40px; height: 40px;
+  background: linear-gradient(135deg, #2B7FFF, #1A5FD4);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  border: none; cursor: pointer;
+}
+</style>
+</head>
+<body>
+<div class="phone-frame">
+  <div class="status-bar">
+    <span>9:41</span>
+    <span style="display:flex;gap:4px;align-items:center;">
+      <svg width="16" height="12" viewBox="0 0 16 12"><rect x="0" y="5" width="3" height="7" rx="1" fill="#1D2129"/><rect x="4.5" y="3" width="3" height="9" rx="1" fill="#1D2129"/><rect x="9" y="1" width="3" height="11" rx="1" fill="#1D2129"/><rect x="13.5" y="0" width="2.5" height="12" rx="1" fill="#1D2129"/></svg>
+      <svg width="22" height="12" viewBox="0 0 22 12"><rect x="0" y="1" width="18" height="10" rx="2" stroke="#1D2129" stroke-width="1" fill="none"/><rect x="19" y="3.5" width="2" height="5" rx="1" fill="#1D2129"/><rect x="2" y="3" width="12" height="6" rx="1" fill="#34C759"/></svg>
+    </span>
+  </div>
+  <div class="top-bar">
+    <div class="back-btn">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1D2129" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+    </div>
+    <div class="top-actions">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1D2129" stroke-width="1.8"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1D2129" stroke-width="1.8"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+    </div>
+  </div>
+  <div class="content">
+    <div class="author-section">
+      <div class="author-avatar">李</div>
+      <div class="author-info">
+        <div class="author-name">李同学</div>
+        <div class="author-meta">北京邮电大学 · 2小时前</div>
+      </div>
+      <button class="follow-btn">+ 关注</button>
+    </div>
+    <div class="article">
+      <div class="article-title">字节跳动产品经理二面面经分享</div>
+      <div class="article-body">
+        <p>刚结束字节的二面，整体感觉面试官非常专业。面试时长约45分钟，主要围绕<span class="highlight">项目经验</span>和<span class="highlight">产品思维</span>进行提问。</p>
+        <p>以下是面试中遇到的核心问题：</p>
+        <div class="question">Q1: 你如何看待抖音和快手的差异化竞争策略？</div>
+        <p>我从内容分发逻辑、用户画像差异和商业化路径三个维度进行了分析，面试官对框架化思考表示认可。</p>
+        <div class="question">Q2: 如果让你设计一个求职面试工具APP，你会怎么规划核心功能？</div>
+        <p>我从用户痛点出发，提出了面试日程管理、经验社区和模拟训练三大模块，面试官对这个产品思路很感兴趣。</p>
+        <div class="question">Q3: 描述一次你失败的经历，你学到了什么？</div>
+        <p>分享了实习期间的一次项目延期经历，重点阐述了反思和改进措施。建议大家准备2-3个这类行为面试题的素材。</p>
+        <p>总体感受：字节面试注重逻辑思维和框架化表达能力，建议提前准备结构化答题模板。祝大家面试顺利！🎉</p>
+      </div>
+    </div>
+    <div class="article-tags">
+      <span class="a-tag blue">字节跳动</span>
+      <span class="a-tag blue">产品经理</span>
+      <span class="a-tag">面试经验</span>
+      <span class="a-tag">二面</span>
+    </div>
+  </div>
+  <div class="interact-bar">
+    <div class="interact-btn liked">
+      <svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="0"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+      <span>128</span>
+    </div>
+    <div class="interact-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+      <span>36</span>
+    </div>
+    <div class="interact-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>
+      <span>收藏</span>
+    </div>
+  </div>
+  <div class="comment-input">
+    <input class="comment-field" type="text" placeholder="写下你的评论...">
+    <button class="send-btn">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+    </button>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>面试小助理 - 面试详情页</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  display: flex; justify-content: center; align-items: center;
+  min-height: 100vh; background: #1a1a2e;
+}
+.phone-frame {
+  width: 375px; height: 812px;
+  background: #F5F7FA;
+  position: relative; overflow: hidden;
+  border-radius: 40px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  display: flex; flex-direction: column;
+}
+.status-bar {
+  height: 44px; display: flex; align-items: center;
+  justify-content: space-between; padding: 0 24px;
+  font-size: 12px; color: #fff;
+  background: #2B7FFF;
+}
+/* 顶部企业信息 */
+.header-bg {
+  background: linear-gradient(135deg, #2B7FFF, #1A5FD4);
+  padding: 0 20px 28px;
+  border-radius: 0 0 28px 28px;
+}
+.header-nav {
+  display: flex; align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.back-btn {
+  width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+}
+.header-actions {
+  display: flex; gap: 16px;
+}
+.company-info {
+  display: flex; align-items: center; gap: 14px;
+}
+.company-logo-lg {
+  width: 56px; height: 56px;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px; font-weight: 700; color: #fff;
+}
+.company-detail { flex: 1; }
+.company-detail h2 {
+  font-size: 18px; font-weight: 700; color: #fff;
+  margin-bottom: 4px; font-family: 'PingFang SC', sans-serif;
+}
+.company-detail p {
+  font-size: 13px; color: rgba(255,255,255,0.7);
+}
+/* 轮次进度条 */
+.progress-bar {
+  display: flex; align-items: center;
+  margin: 16px 20px 0;
+  background: rgba(255,255,255,0.15);
+  border-radius: 20px;
+  padding: 10px 16px;
+  gap: 6px;
+}
+.step {
+  display: flex; align-items: center; gap: 6px;
+  flex: 1; justify-content: center;
+}
+.step-dot {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 600;
+}
+.step-dot.done { background: #34C759; color: #fff; }
+.step-dot.current { background: #FF8C42; color: #fff; }
+.step-dot.future { background: rgba(255,255,255,0.3); color: rgba(255,255,255,0.6); }
+.step-text { font-size: 10px; color: rgba(255,255,255,0.7); }
+.step-line {
+  width: 16px; height: 2px;
+  background: rgba(255,255,255,0.3);
+}
+/* 内容区域 */
+.content {
+  flex: 1; padding: 16px 20px;
+  overflow-y: auto;
+}
+/* 信息卡片 */
+.info-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+.info-card-title {
+  font-size: 14px; font-weight: 600; color: #1D2129;
+  margin-bottom: 12px;
+  display: flex; align-items: center; gap: 8px;
+}
+.info-card-title svg { width: 18px; height: 18px; }
+.info-row {
+  display: flex; justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #F2F3F5;
+}
+.info-row:last-child { border-bottom: none; }
+.info-label { font-size: 13px; color: #86909C; }
+.info-value { font-size: 13px; color: #1D2129; font-weight: 500; }
+.info-value.highlight { color: #2B7FFF; }
+/* 企业简介 */
+.company-desc {
+  font-size: 13px; color: #4E5969;
+  line-height: 1.8;
+}
+/* 笔记区域 */
+.note-area {
+  background: #FFFBF0;
+  border: 1px dashed #FFD666;
+  border-radius: 12px;
+  padding: 14px;
+  min-height: 80px;
+}
+.note-placeholder {
+  font-size: 13px; color: #C9CDD4;
+  display: flex; align-items: center; gap: 6px;
+}
+/* 底部操作栏 */
+.bottom-actions {
+  padding: 12px 20px 30px;
+  background: #fff;
+  display: flex; gap: 12px;
+  border-top: 1px solid #F2F3F5;
+}
+.action-btn {
+  flex: 1; height: 44px;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  gap: 6px; font-size: 14px; font-weight: 500;
+  cursor: pointer; border: none;
+  font-family: 'PingFang SC', sans-serif;
+}
+.action-btn svg { width: 18px; height: 18px; }
+.action-btn.primary {
+  background: linear-gradient(135deg, #2B7FFF, #1A5FD4);
+  color: #fff;
+}
+.action-btn.secondary {
+  background: #F5F7FA;
+  color: #4E5969;
+}
+.action-btn.accent {
+  background: #FFF7E6;
+  color: #FF8C42;
+}
+</style>
+</head>
+<body>
+<div class="phone-frame">
+  <div class="status-bar">
+    <span>9:41</span>
+    <span style="display:flex;gap:4px;align-items:center;">
+      <svg width="16" height="12" viewBox="0 0 16 12"><rect x="0" y="5" width="3" height="7" rx="1" fill="#fff"/><rect x="4.5" y="3" width="3" height="9" rx="1" fill="#fff"/><rect x="9" y="1" width="3" height="11" rx="1" fill="#fff"/><rect x="13.5" y="0" width="2.5" height="12" rx="1" fill="#fff"/></svg>
+      <svg width="22" height="12" viewBox="0 0 22 12"><rect x="0" y="1" width="18" height="10" rx="2" stroke="#fff" stroke-width="1" fill="none"/><rect x="19" y="3.5" width="2" height="5" rx="1" fill="#fff"/><rect x="2" y="3" width="12" height="6" rx="1" fill="#fff"/></svg>
+    </span>
+  </div>
+  <div class="header-bg">
+    <div class="header-nav">
+      <div class="back-btn">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+      </div>
+      <div class="header-actions">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+      </div>
+    </div>
+    <div class="company-info">
+      <div class="company-logo-lg">字</div>
+      <div class="company-detail">
+        <h2>字节跳动</h2>
+        <p>产品经理 · 北京</p>
+      </div>
+    </div>
+    <div class="progress-bar">
+      <div class="step">
+        <div class="step-dot done">✓</div>
+        <span class="step-text">笔试</span>
+      </div>
+      <div class="step-line"></div>
+      <div class="step">
+        <div class="step-dot done">✓</div>
+        <span class="step-text">一面</span>
+      </div>
+      <div class="step-line"></div>
+      <div class="step">
+        <div class="step-dot current">3</div>
+        <span class="step-text">二面</span>
+      </div>
+      <div class="step-line"></div>
+      <div class="step">
+        <div class="step-dot future">4</div>
+        <span class="step-text">HR面</span>
+      </div>
+      <div class="step-line"></div>
+      <div class="step">
+        <div class="step-dot future">5</div>
+        <span class="step-text">Offer</span>
+      </div>
+    </div>
+  </div>
+  <div class="content">
+    <!-- 基本信息卡片 -->
+    <div class="info-card">
+      <div class="info-card-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#2B7FFF" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+        面试信息
+      </div>
+      <div class="info-row">
+        <span class="info-label">面试时间</span>
+        <span class="info-value highlight">2025/01/15 14:00</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">面试地点</span>
+        <span class="info-value">海淀区中关村e世界</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">面试轮次</span>
+        <span class="info-value">第二轮 · 技术面</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">联系人</span>
+        <span class="info-value">HR 张女士</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">面试形式</span>
+        <span class="info-value">线下面试</span>
+      </div>
+    </div>
+    <!-- 企业简介 -->
+    <div class="info-card">
+      <div class="info-card-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#2B7FFF" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+        企业简介
+      </div>
+      <p class="company-desc">字节跳动是全球领先的科技公司，旗下拥有抖音、今日头条、飞书等多款知名产品。公司致力于通过技术创新为用户提供优质的信息和内容服务...</p>
+    </div>
+    <!-- 个人笔记 -->
+    <div class="info-card">
+      <div class="info-card-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#FF8C42" stroke-width="1.8"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        个人笔记
+      </div>
+      <div class="note-area">
+        <div class="note-placeholder">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C9CDD4" stroke-width="1.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          点击添加面试准备笔记...
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 底部操作 -->
+  <div class="bottom-actions">
+    <button class="action-btn secondary">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+      提醒
+    </button>
+    <button class="action-btn accent">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      导航
+    </button>
+    <button class="action-btn primary">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+      编辑
+    </button>
+  </div>
+</div>
+</body>
+</html>

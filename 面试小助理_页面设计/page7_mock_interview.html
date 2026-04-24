@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>面试小助理 - 模拟面试</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  display: flex; justify-content: center; align-items: center;
+  min-height: 100vh; background: #1a1a2e;
+  font-family: 'PingFang SC', 'Noto Sans SC', sans-serif;
+}
+.phone-frame {
+  width: 375px; height: 812px;
+  background: #F5F7FA;
+  position: relative; overflow: hidden;
+  border-radius: 40px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  display: flex; flex-direction: column;
+}
+
+/* ===== 状态栏 ===== */
+.status-bar {
+  height: 44px; display: flex; align-items: center;
+  justify-content: space-between; padding: 0 24px;
+  font-size: 12px; color: #1D2129; background: #fff;
+}
+
+/* ===== 导航栏 ===== */
+.nav-bar {
+  padding: 0 20px 12px;
+  display: flex; align-items: center; justify-content: space-between;
+  background: #fff;
+}
+.nav-title {
+  font-size: 20px; font-weight: 700; color: #1D2129;
+}
+
+/* ===== 模式切换器 ===== */
+.mode-switcher {
+  display: flex; margin: 0 20px 14px;
+  background: #F2F3F5; border-radius: 24px;
+  padding: 3px; position: relative;
+}
+.mode-tab {
+  flex: 1; padding: 10px 0;
+  font-size: 13px; font-weight: 500; color: #86909C;
+  text-align: center; cursor: pointer;
+  border-radius: 22px; position: relative; z-index: 1;
+  transition: color 0.3s;
+}
+.mode-tab.active { color: #fff; font-weight: 600; }
+.mode-slider {
+  position: absolute; top: 3px; left: 3px;
+  width: calc(50% - 3px); height: calc(100% - 6px);
+  background: linear-gradient(135deg, #2B7FFF, #1A5FD4);
+  border-radius: 22px; transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+}
+.mode-slider.right { transform: translateX(100%); }
+.mode-tab .tab-icon { margin-right: 4px; }
+
+/* ===== 岗位选择 ===== */
+.job-selector {
+  display: flex; gap: 0; padding: 0 20px;
+  margin-bottom: 12px; overflow-x: auto;
+}
+.job-tab {
+  padding: 7px 13px; font-size: 12px; color: #86909C;
+  white-space: nowrap; background: #fff;
+  border-radius: 20px; margin-right: 8px;
+  cursor: pointer; border: 1px solid #E5E6EB;
+}
+.job-tab.active {
+  background: linear-gradient(135deg, #2B7FFF, #1A5FD4);
+  color: #fff; border-color: transparent;
+}
+
+/* ===== 统计行 ===== */
+.stats-row {
+  display: flex; justify-content: space-between;
+  padding: 0 20px; margin-bottom: 14px;
+}
+.stat-pill {
+  display: flex; align-items: center; gap: 4px;
+  font-size: 12px; color: #86909C;
+}
+.stat-pill strong { color: #2B7FFF; font-size: 16px; }
+
+/* ===== 标准化练习内容 ===== */
+.standard-content {
+  flex: 1; padding: 0 20px; overflow-y: auto;
+  display: flex; flex-direction: column;
+}
+
+/* 翻转卡片 */
+.flip-card {
+  perspective: 1000px; margin-bottom: 12px;
+  height: 140px; cursor: pointer;
+}
+.flip-card-inner {
+  position: relative; width: 100%; height: 100%;
+  transition: transform 0.6s; transform-style: preserve-3d;
+}
+.flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
+.flip-front, .flip-back {
+  position: absolute; width: 100%; height: 100%;
+  backface-visibility: hidden; border-radius: 16px;
+  padding: 18px; display: flex; flex-direction: column; justify-content: center;
+}
+.flip-front {
+  background: #fff; box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+.flip-back {
+  background: linear-gradient(135deg, #EBF2FF, #D6E8FF);
+  transform: rotateY(180deg);
+  box-shadow: 0 2px 12px rgba(43,127,255,0.15);
+}
+.card-number { font-size: 11px; color: #2B7FFF; font-weight: 600; margin-bottom: 6px; }
+.card-question { font-size: 14px; color: #1D2129; line-height: 1.6; font-weight: 500; }
+.card-hint {
+  display: flex; align-items: center; gap: 4px;
+  font-size: 11px; color: #C9CDD4; margin-top: 10px;
+}
+.answer-label { font-size: 11px; color: #2B7FFF; font-weight: 600; margin-bottom: 6px; }
+.answer-text { font-size: 13px; color: #4E5969; line-height: 1.7; }
+.answer-tags { display: flex; gap: 6px; margin-top: 8px; }
+.diff-tag { font-size: 10px; padding: 2px 8px; border-radius: 4px; }
+.diff-easy { background: #E8F8EE; color: #34C759; }
+.diff-medium { background: #FFF7E6; color: #FF8C42; }
+.diff-hard { background: #FFECE8; color: #FF4D4F; }
+
+/* 计时器按钮 */
+.timer-btn {
+  display: flex; align-items: center; gap: 6px;
+  background: #FFF7E6; padding: 6px 14px; border-radius: 16px; cursor: pointer;
+}
+.timer-btn svg { width: 16px; height: 16px; color: #FF8C42; }
+.timer-btn span { font-size: 13px; color: #FF8C42; font-weight: 600; }
+
+/* ===== 实景练习内容 ===== */
+.live-content {
+  flex: 1; display: none; flex-direction: column;
+  overflow: hidden;
+}
+
+/* 实景 - 顶部进度 */
+.live-header {
+  padding: 10px 20px; background: #fff;
+  border-bottom: 1px solid #F2F3F5;
+}
+.live-progress {
+  display: flex; align-items: center; justify-content: space-between;
+}
+.live-timer { font-size: 18px; font-weight: 700; color: #1D2129; font-variant-numeric: tabular-nums; }
+.live-info { font-size: 12px; color: #86909C; display: flex; align-items: center; gap: 6px; }
+.live-dot {
+  width: 6px; height: 6px; background: #FF4D4F; border-radius: 50%;
+  animation: livePulse 1.5s infinite;
+}
+@keyframes livePulse { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+.progress-track {
+  width: 100%; height: 3px; background: #E5E6EB; border-radius: 2px; margin-top: 8px;
+}
+.progress-fill {
+  width: 35%; height: 100%; background: linear-gradient(90deg, #2B7FFF, #1A5FD4);
+  border-radius: 2px; transition: width 0.3s;
+}
+
+/* 实景 - 对话区 */
+.chat-area {
+  flex: 1; overflow-y: auto; padding: 12px 16px;
+  display: flex; flex-direction: column; gap: 14px;
+}
+.msg { display: flex; gap: 10px; max-width: 85%; animation: msgIn 0.4s ease-out; }
+@keyframes msgIn { from{opacity:0;transform:translateY(12px);} to{opacity:1;transform:translateY(0);} }
+.msg.ai { align-self: flex-start; }
+.msg.user { align-self: flex-end; flex-direction: row-reverse; }
+.msg-avatar {
+  width: 32px; height: 32px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; font-size: 14px;
+}
+.msg.ai .msg-avatar { background: linear-gradient(135deg, #2B7FFF, #1A5FD4); }
+.msg.user .msg-avatar { background: linear-gradient(135deg, #FF8C42, #FF6B2B); }
+.msg-bubble {
+  padding: 12px 14px; border-radius: 16px;
+  font-size: 13px; line-height: 1.7; position: relative;
+}
+.msg.ai .msg-bubble {
+  background: #fff; color: #1D2129; border-top-left-radius: 4px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+.msg.user .msg-bubble {
+  background: linear-gradient(135deg, #2B7FFF, #1A5FD4);
+  color: #fff; border-top-right-radius: 4px;
+}
+.msg-time { font-size: 10px; color: #86909C; margin-top: 4px; }
+.msg.user .msg-time { text-align: right; }
+.system-msg {
+  text-align: center; font-size: 12px; color: #86909C;
+  padding: 6px 14px; background: #F2F3F5; border-radius: 12px; align-self: center;
+}
+.typing-indicator { display: flex; gap: 4px; padding: 4px 0; }
+.typing-indicator span {
+  width: 6px; height: 6px; background: #C9CDD4; border-radius: 50%;
+  animation: typingBounce 1.2s infinite;
+}
+.typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+.typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes typingBounce {
+  0%,60%,100%{transform:translateY(0);background:#C9CDD4;}
+  30%{transform:translateY(-6px);background:#2B7FFF;}
+}
+
+/* 实景 - 波形 */
+.voice-visual {
+  padding: 10px 20px 6px; display: flex; flex-direction: column; align-items: center;
+  background: #fff; border-top: 1px solid #F2F3F5;
+}
+.waveform { display: flex; align-items: center; justify-content: center; gap: 3px; height: 36px; }
+.wave-bar {
+  width: 3px; border-radius: 2px; background: #2B7FFF;
+  animation: waveAnim 0.8s ease-in-out infinite alternate;
+}
+.wave-bar:nth-child(1){height:8px;animation-delay:0s}
+.wave-bar:nth-child(2){height:16px;animation-delay:.1s}
+.wave-bar:nth-child(3){height:24px;animation-delay:.2s}
+.wave-bar:nth-child(4){height:32px;animation-delay:.3s}
+.wave-bar:nth-child(5){height:20px;animation-delay:.4s}
+.wave-bar:nth-child(6){height:28px;animation-delay:.5s}
+.wave-bar:nth-child(7){height:16px;animation-delay:.6s}
+.wave-bar:nth-child(8){height:10px;animation-delay:.7s}
+.wave-bar:nth-child(9){height:22px;animation-delay:.15s}
+.wave-bar:nth-child(10){height:14px;animation-delay:.35s}
+.wave-bar:nth-child(11){height:26px;animation-delay:.55s}
+.wave-bar:nth-child(12){height:18px;animation-delay:.65s}
+.wave-bar:nth-child(13){height:30px;animation-delay:.25s}
+.wave-bar:nth-child(14){height:12px;animation-delay:.45s}
+.wave-bar:nth-child(15){height:20px;animation-delay:.05s}
+@keyframes waveAnim { 0%{height:6px;opacity:.4} 100%{height:32px;opacity:1} }
+.voice-status {
+  font-size: 12px; color: #2B7FFF; font-weight: 500; margin-top: 6px;
+  display: flex; align-items: center; gap: 4px;
+}
+.pulse-ring {
+  width: 8px; height: 8px; background: #2B7FFF; border-radius: 50%; position: relative;
+}
+.pulse-ring::after {
+  content:''; position: absolute; top: -4px; left: -4px;
+  width: 16px; height: 16px; border: 2px solid #2B7FFF; border-radius: 50%;
+  animation: pulseRing 1.5s infinite;
+}
+@keyframes pulseRing { 0%{transform:scale(.8);opacity:1} 100%{transform:scale(1.6);opacity:0} }
+
+/* 实景 - 提示标签 */
+.hint-tags {
+  display: flex; gap: 8px; justify-content: center;
+  padding: 0 20px 10px; background: #fff;
+}
+.hint-tag {
+  font-size: 11px; color: #2B7FFF; padding: 4px 10px;
+  background: #EBF2FF; border-radius: 12px; cursor: pointer;
+}
+
+/* 实景 - 控制区 */
+.controls {
+  padding: 14px 20px 30px; background: #fff;
+  display: flex; align-items: center; justify-content: center; gap: 20px;
+}
+.ctrl-btn {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  cursor: pointer; border: none; background: none;
+}
+.ctrl-btn span { font-size: 10px; color: #86909C; }
+.ctrl-icon {
+  width: 44px; height: 44px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+}
+.ctrl-icon.secondary { background: #F5F7FA; color: #4E5969; }
+.mic-btn {
+  width: 64px; height: 64px; border-radius: 50%;
+  background: linear-gradient(135deg, #2B7FFF, #1A5FD4);
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 24px rgba(43,127,255,0.4);
+  cursor: pointer; border: none; position: relative; transition: transform 0.2s;
+}
+.mic-btn:active { transform: scale(0.92); }
+.mic-btn::before {
+  content:''; position: absolute; width: 80px; height: 80px; border-radius: 50%;
+  background: rgba(43,127,255,0.15); animation: micPulse 2s infinite;
+}
+@keyframes micPulse { 0%{transform:scale(.9);opacity:.6} 50%{transform:scale(1.1);opacity:.2} 100%{transform:scale(.9);opacity:.6} }
+.mic-btn svg { position: relative; z-index: 1; }
+
+/* ===== 底部导航 ===== */
+.bottom-nav {
+  height: 70px; background: #fff;
+  display: flex; align-items: center; justify-content: space-around;
+  border-top: 1px solid #F2F3F5; padding-bottom: 10px;
+}
+.nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.nav-item svg { width: 24px; height: 24px; }
+.nav-item span { font-size: 10px; }
+.nav-item.active svg { color: #2B7FFF; }
+.nav-item.active span { color: #2B7FFF; font-weight: 600; }
+.nav-item:not(.active) svg { color: #C9CDD4; }
+.nav-item:not(.active) span { color: #C9CDD4; }
+</style>
+</head>
+<body>
+<div class="phone-frame">
+  <!-- 状态栏 -->
+  <div class="status-bar">
+    <span>9:41</span>
+    <span style="display:flex;gap:4px;align-items:center;">
+      <svg width="16" height="12" viewBox="0 0 16 12"><rect x="0" y="5" width="3" height="7" rx="1" fill="#1D2129"/><rect x="4.5" y="3" width="3" height="9" rx="1" fill="#1D2129"/><rect x="9" y="1" width="3" height="11" rx="1" fill="#1D2129"/><rect x="13.5" y="0" width="2.5" height="12" rx="1" fill="#1D2129"/></svg>
+      <svg width="22" height="12" viewBox="0 0 22 12"><rect x="0" y="1" width="18" height="10" rx="2" stroke="#1D2129" stroke-width="1" fill="none"/><rect x="19" y="3.5" width="2" height="5" rx="1" fill="#1D2129"/><rect x="2" y="3" width="12" height="6" rx="1" fill="#34C759"/></svg>
+    </span>
+  </div>
+
+  <!-- 导航栏 -->
+  <div class="nav-bar">
+    <span class="nav-title">模拟面试</span>
+    <div class="timer-btn" id="timerBtn" style="display:flex">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      <span>03:00</span>
+    </div>
+  </div>
+
+  <!-- 模式切换器 -->
+  <div class="mode-switcher">
+    <div class="mode-slider" id="modeSlider"></div>
+    <div class="mode-tab active" onclick="switchMode('standard')">
+      <span class="tab-icon">📋</span>标准化练习
+    </div>
+    <div class="mode-tab" onclick="switchMode('live')">
+      <span class="tab-icon">🎙</span>实景练习
+    </div>
+  </div>
+
+  <!-- 岗位选择（标准化练习可见） -->
+  <div class="job-selector" id="jobSelector">
+    <div class="job-tab active">产品经理</div>
+    <div class="job-tab">软件开发</div>
+    <div class="job-tab">市场营销</div>
+    <div class="job-tab">人力资源</div>
+    <div class="job-tab">财务管理</div>
+  </div>
+
+  <!-- 统计行（标准化练习可见） -->
+  <div class="stats-row" id="statsRow">
+    <span class="stat-pill">题目总数: <strong>15</strong></span>
+    <span class="stat-pill">已完成: <strong>3</strong>/15</span>
+    <span class="stat-pill">正确率: <strong>67%</strong></span>
+  </div>
+
+  <!-- ====== 标准化练习内容区 ====== -->
+  <div class="standard-content" id="standardView">
+    <div class="flip-card flipped" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <span class="card-number">题目 01 / 15</span>
+          <span class="card-question">请做一个简单的自我介绍</span>
+          <span class="card-hint">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#C9CDD4" stroke-width="1.5"><polyline points="15 3 21 3 21 9"/><path d="M10 14L21 3"/><path d="M14 21H5a2 2 0 01-2-2V10"/></svg>
+            点击翻转查看参考答案
+          </span>
+        </div>
+        <div class="flip-back">
+          <span class="answer-label">💡 参考答案</span>
+          <span class="answer-text">建议采用"1分钟电梯演讲"结构：基本信息（10秒）→ 教育背景（15秒）→ 实习/项目经历（20秒）→ 个人优势与求职意向（15秒）。</span>
+          <div class="answer-tags"><span class="diff-tag diff-easy">基础题</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <span class="card-number">题目 02 / 15</span>
+          <span class="card-question">你认为自己最大的优点和缺点分别是什么？</span>
+          <span class="card-hint">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#C9CDD4" stroke-width="1.5"><polyline points="15 3 21 3 21 9"/><path d="M10 14L21 3"/><path d="M14 21H5a2 2 0 01-2-2V10"/></svg>
+            点击翻转查看参考答案
+          </span>
+        </div>
+        <div class="flip-back">
+          <span class="answer-label">💡 参考答案</span>
+          <span class="answer-text">优点结合具体事例说明，缺点选择"可改进的真实不足"而非"伪装的缺点"，同时说明正在采取的改进措施。</span>
+          <div class="answer-tags"><span class="diff-tag diff-easy">基础题</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <span class="card-number">题目 03 / 15</span>
+          <span class="card-question">如何评估一个产品功能是否值得开发？</span>
+          <span class="card-hint">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#C9CDD4" stroke-width="1.5"><polyline points="15 3 21 3 21 9"/><path d="M10 14L21 3"/><path d="M14 21H5a2 2 0 01-2-2V10"/></svg>
+            点击翻转查看参考答案
+          </span>
+        </div>
+        <div class="flip-back">
+          <span class="answer-label">💡 参考答案</span>
+          <span class="answer-text">从用户价值（需求频次、痛点程度）、商业价值（ROI预估）、技术可行性（开发成本）、战略契合度四个维度综合评估。</span>
+          <div class="answer-tags"><span class="diff-tag diff-medium">进阶题</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <span class="card-number">题目 04 / 15</span>
+          <span class="card-question">描述一次你在团队中处理分歧的经历</span>
+          <span class="card-hint">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#C9CDD4" stroke-width="1.5"><polyline points="15 3 21 3 21 9"/><path d="M10 14L21 3"/><path d="M14 21H5a2 2 0 01-2-2V10"/></svg>
+            点击翻转查看参考答案
+          </span>
+        </div>
+        <div class="flip-back">
+          <span class="answer-label">💡 参考答案</span>
+          <span class="answer-text">采用STAR法则（情境-任务-行动-结果）结构化回答，重点展示沟通协调能力和以目标为导向的解决问题思维。</span>
+          <div class="answer-tags"><span class="diff-tag diff-medium">进阶题</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <span class="card-number">题目 05 / 15</span>
+          <span class="card-question">如果竞争对手推出类似功能，你会如何应对？</span>
+          <span class="card-hint">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#C9CDD4" stroke-width="1.5"><polyline points="15 3 21 3 21 9"/><path d="M10 14L21 3"/><path d="M14 21H5a2 2 0 01-2-2V10"/></svg>
+            点击翻转查看参考答案
+          </span>
+        </div>
+        <div class="flip-back">
+          <span class="answer-label">💡 参考答案</span>
+          <span class="answer-text">从竞品分析→差异化定位→用户反馈验证→快速迭代四个步骤展开，强调以用户价值为核心的竞争策略。</span>
+          <div class="answer-tags"><span class="diff-tag diff-hard">挑战题</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== 实景练习内容区 ====== -->
+  <div class="live-content" id="liveView">
+    <!-- 顶部进度 -->
+    <div class="live-header">
+      <div class="live-progress">
+        <span class="live-info"><span class="live-dot"></span> 产品经理 · 第3题/共8题</span>
+        <span class="live-timer">12:38</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill"></div></div>
+    </div>
+
+    <!-- 对话区 -->
+    <div class="chat-area">
+      <div class="system-msg">🎓 AI面试官已就位，产品经理岗位模拟面试开始</div>
+      <div class="msg ai">
+        <div class="msg-avatar">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#fff"><path d="M12 2a2 2 0 012 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 017 7h1a1 1 0 011 1v3a1 1 0 01-1 1h-1.07A7 7 0 015.07 19H4a1 1 0 01-1-1v-3a1 1 0 011-1h1a7 7 0 017-7h1V5.73A2 2 0 0112 2zm-1 10a2 2 0 100 4 2 2 0 000-4zm5 0a2 2 0 100 4 2 2 0 000-4z"/></svg>
+        </div>
+        <div>
+          <div class="msg-bubble">你好，欢迎参加本次产品经理岗位面试。首先请做一个简短的自我介绍，重点介绍你的教育背景和与产品相关的经历。</div>
+          <div class="msg-time">12:32</div>
+        </div>
+      </div>
+      <div class="msg user">
+        <div class="msg-avatar">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="#fff"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </div>
+        <div>
+          <div class="msg-bubble">面试官您好，我是北京邮电大学计算机专业的应届毕业生。在校期间我参与了两个产品相关项目，一个是校园社交产品的需求分析和原型设计，另一个是食堂订餐小程序的产品迭代。</div>
+          <div class="msg-time">12:34 · 🎤 语音转文字</div>
+        </div>
+      </div>
+      <div class="msg ai">
+        <div class="msg-avatar">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#fff"><path d="M12 2a2 2 0 012 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 017 7h1a1 1 0 011 1v3a1 1 0 01-1 1h-1.07A7 7 0 015.07 19H4a1 1 0 01-1-1v-3a1 1 0 011-1h1a7 7 0 017-7h1V5.73A2 2 0 0112 2zm-1 10a2 2 0 100 4 2 2 0 000-4zm5 0a2 2 0 100 4 2 2 0 000-4z"/></svg>
+        </div>
+        <div>
+          <div class="msg-bubble">好的，你的项目经历很丰富。接下来我想考察一下你的产品思维——<strong>你如何评估一个产品功能是否值得开发？</strong>请结合实际案例来说明。</div>
+          <div class="msg-time">12:35</div>
+        </div>
+      </div>
+      <div class="msg user">
+        <div class="msg-avatar">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="#fff"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </div>
+        <div>
+          <div class="msg-bubble">我认为评估产品功能需要从四个维度分析：用户价值、商业价值、技术可行性和战略契合度。以我做的食堂小程序为例，当时评估"拼单"功能时...</div>
+          <div class="msg-time">12:37 · 🎤 语音转文字</div>
+        </div>
+      </div>
+      <div class="msg ai">
+        <div class="msg-avatar">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#fff"><path d="M12 2a2 2 0 012 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 017 7h1a1 1 0 011 1v3a1 1 0 01-1 1h-1.07A7 7 0 015.07 19H4a1 1 0 01-1-1v-3a1 1 0 011-1h1a7 7 0 017-7h1V5.73A2 2 0 0112 2zm-1 10a2 2 0 100 4 2 2 0 000-4zm5 0a2 2 0 100 4 2 2 0 000-4z"/></svg>
+        </div>
+        <div>
+          <div class="msg-bubble">
+            <div class="typing-indicator"><span></span><span></span><span></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 波形 -->
+    <div class="voice-visual">
+      <div class="waveform">
+        <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+        <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+        <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+        <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+        <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+      </div>
+      <div class="voice-status">
+        <span class="pulse-ring"></span> AI 面试官正在思考...
+      </div>
+    </div>
+
+    <!-- 提示标签 -->
+    <div class="hint-tags">
+      <span class="hint-tag">💡 请求提示</span>
+      <span class="hint-tag">⏭ 跳过此题</span>
+      <span class="hint-tag">📊 查看评分</span>
+    </div>
+
+    <!-- 控制区 -->
+    <div class="controls">
+      <button class="ctrl-btn">
+        <div class="ctrl-icon secondary">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4E5969" stroke-width="1.8"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        </div>
+        <span>文字</span>
+      </button>
+      <button class="mic-btn" id="micBtn">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+      </button>
+      <button class="ctrl-btn">
+        <div class="ctrl-icon secondary">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4E5969" stroke-width="1.8"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+        </div>
+        <span>暂停</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- 底部导航 -->
+  <div class="bottom-nav">
+    <div class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      <span>首页</span>
+    </div>
+    <div class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+      <span>经验</span>
+    </div>
+    <div class="nav-item active">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+      <span>模拟</span>
+    </div>
+    <div class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span>我的</span>
+    </div>
+  </div>
+</div>
+
+<script>
+// 模式切换
+function switchMode(mode) {
+  const tabs = document.querySelectorAll('.mode-tab');
+  const slider = document.getElementById('modeSlider');
+  const standardView = document.getElementById('standardView');
+  const liveView = document.getElementById('liveView');
+  const jobSelector = document.getElementById('jobSelector');
+  const statsRow = document.getElementById('statsRow');
+  const timerBtn = document.getElementById('timerBtn');
+
+  tabs.forEach(t => t.classList.remove('active'));
+  
+  if (mode === 'standard') {
+    tabs[0].classList.add('active');
+    slider.classList.remove('right');
+    standardView.style.display = 'flex';
+    liveView.style.display = 'none';
+    jobSelector.style.display = 'flex';
+    statsRow.style.display = 'flex';
+    timerBtn.style.display = 'flex';
+  } else {
+    tabs[1].classList.add('active');
+    slider.classList.add('right');
+    standardView.style.display = 'none';
+    liveView.style.display = 'flex';
+    jobSelector.style.display = 'none';
+    statsRow.style.display = 'none';
+    timerBtn.style.display = 'none';
+  }
+}
+
+// 麦克风按钮交互
+const micBtn = document.getElementById('micBtn');
+let isListening = false;
+
+micBtn.addEventListener('click', function() {
+  isListening = !isListening;
+  const voiceStatus = document.querySelector('.voice-status');
+  
+  if (isListening) {
+    micBtn.style.background = 'linear-gradient(135deg, #FF4D4F, #E03030)';
+    micBtn.style.boxShadow = '0 4px 24px rgba(255,77,79,0.4)';
+    voiceStatus.innerHTML = '<span class="pulse-ring" style="background:#FF4D4F"></span> 正在聆听您的回答...';
+    voiceStatus.style.color = '#FF4D4F';
+    document.querySelectorAll('.wave-bar').forEach(bar => {
+      bar.style.background = '#FF4D4F';
+      bar.style.animationDuration = '0.4s';
+    });
+  } else {
+    micBtn.style.background = 'linear-gradient(135deg, #2B7FFF, #1A5FD4)';
+    micBtn.style.boxShadow = '0 4px 24px rgba(43,127,255,0.4)';
+    voiceStatus.innerHTML = '<span class="pulse-ring"></span> AI 面试官正在思考...';
+    voiceStatus.style.color = '#2B7FFF';
+    document.querySelectorAll('.wave-bar').forEach(bar => {
+      bar.style.background = '#2B7FFF';
+      bar.style.animationDuration = '0.8s';
+    });
+  }
+});
+</script>
+</body>
+</html>
